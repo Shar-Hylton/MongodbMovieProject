@@ -1,0 +1,20 @@
+<h2>Edit Movie: <%= movie.title %></h2>
+
+<form action="/movies/edit/<%= movie._id %>" method="POST">
+    <label>Title:</label>
+    <input type="text" name="title" value="<%= movie.title %>" required>
+
+    <label>Year:</label>
+    <input type="number" name="year" value="<%= movie.year %>" required>
+
+    <label>Genre:</label>
+    <input type="text" name="genre" value="<%= movie.genre %>">
+
+    <label>Rating:</label>
+    <input type="number" name="rating" value="<%= movie.rating %>" min="1" max="10">
+
+    <label>Description:</label>
+    <textarea name="description"><%= movie.description %></textarea>
+
+    <button type="submit" class="btn">Update Movie</button>
+</form>

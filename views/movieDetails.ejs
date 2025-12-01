@@ -1,0 +1,8 @@
+<h2><%= movie.title %> (<%= movie.year %>)</h2>
+
+<p><strong>Genre:</strong> <%= movie.genre %></p>
+<p><strong>Rating:</strong> <%= movie.rating %>/10</p>
+<p><strong>Description:</strong> <%= movie.description %></p>
+
+<a href="/movies" class="btn">Back to List</a>
+<a href="/movies/edit/<%= movie._id %>" class="btn btn-edit">Edit Movie</a>
