@@ -5,18 +5,28 @@ const connectDB = require("./config/db");
 const userRoutes = require("./routes/users");
 require('dotenv').config();
  
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 connectDB();
 
 app.set("view engine", "ejs");
 app.use(express.urlencoded({extended:true}));
 
+const session = require('express-session');
+app.use(session({
+    secret: process.env.SESSION_SECRET || 'secret',
+    resave: false,
+    saveUninitialized: false
+}));
+
 //Routes
 
 app.use("/movies", require("./routes/movies"));
 app.use("/", require("./routes/auth"));
 
+app.get('/', (req, res) => {
+    res.redirect('/register');
+});
 app.use("/", userRoutes);   // Mount user routes at root
 
 

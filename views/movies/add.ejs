@@ -1,1 +1,98 @@
-ECHO is on.
+<%- include('../partials/header') %>
+
+    <div class="container mt-5">
+        <h2>Add New Movie</h2>
+
+        <% if (errors && errors.length> 0) { %>
+            <div class="alert alert-danger">
+                <ul>
+                    <% errors.forEach(function(error) { %>
+                        <li>
+                            <%= error.msg %>
+                        </li>
+                        <% }); %>
+                </ul>
+            </div>
+            <% } %>
+
+                <form action="/movies/add" method="POST" novalidate>
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Movie Name <span class="text-danger">*</span></label>
+                        <input type="text"
+                            class="form-control <%= errors.find(e => e.path === 'name') ? 'is-invalid' : '' %>"
+                            id="name" name="name" value="<%= old.name || '' %>" placeholder="Enter movie name" required
+                            maxlength="200">
+                        <% if (errors.find(e=> e.path === 'name')) { %>
+                            <div class="invalid-feedback">
+                                <%= errors.find(e=> e.path === 'name').msg %>
+                            </div>
+                            <% } %>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Description</label>
+                        <textarea
+                            class="form-control <%= errors.find(e => e.path === 'description') ? 'is-invalid' : '' %>"
+                            id="description" name="description" rows="4"
+                            placeholder="Enter a brief description of the movie (optional, min 10 characters)"><%= old.description || '' %></textarea>
+                        <% if (errors.find(e=> e.path === 'description')) { %>
+                            <div class="invalid-feedback">
+                                <%= errors.find(e=> e.path === 'description').msg %>
+                            </div>
+                            <% } %>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="year" class="form-label">Year <span class="text-danger">*</span></label>
+                        <input type="number"
+                            class="form-control <%= errors.find(e => e.path === 'year') ? 'is-invalid' : '' %>"
+                            id="year" name="year" value="<%= old.year || '' %>" placeholder="e.g., 2024" required
+                            min="1888" max="2030">
+                        <div class="form-text">Year must be between 1888 and 2030</div>
+                        <% if (errors.find(e=> e.path === 'year')) { %>
+                            <div class="invalid-feedback">
+                                <%= errors.find(e=> e.path === 'year').msg %>
+                            </div>
+                            <% } %>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="rating" class="form-label">Rating (0-10) <span class="text-danger">*</span></label>
+                        <input type="number"
+                            class="form-control <%= errors.find(e => e.path === 'rating') ? 'is-invalid' : '' %>"
+                            id="rating" name="rating" step="0.1" value="<%= old.rating || '' %>" placeholder="e.g., 8.5"
+                            required min="0" max="10">
+                        <% if (errors.find(e=> e.path === 'rating')) { %>
+                            <div class="invalid-feedback">
+                                <%= errors.find(e=> e.path === 'rating').msg %>
+                            </div>
+                            <% } %>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="genres" class="form-label">Genres <span class="text-danger">*</span></label>
+                        <input type="text"
+                            class="form-control <%= errors.find(e => e.path === 'genres') ? 'is-invalid' : '' %>"
+                            id="genres" name="genres" value="<%= old.genres || '' %>"
+                            placeholder="e.g., Action, Comedy, Sci-Fi" required>
+                        <div class="form-text">Separate multiple genres with commas</div>
+                        <% if (errors.find(e=> e.path === 'genres')) { %>
+                            <div class="invalid-feedback">
+                                <%= errors.find(e=> e.path === 'genres').msg %>
+                            </div>
+                            <% } %>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="extraField" class="form-label">Extra Field</label>
+                        <input type="text" class="form-control" id="extraField" name="extraField"
+                            value="<%= old.extraField || '' %>" placeholder="Additional information (optional)">
+                        <div class="form-text">Any additional information about the movie</div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Add Movie</button>
+                    <a href="/movies" class="btn btn-secondary">Cancel</a>
+                </form>
+    </div>
+
+    <%- include('../partials/footer') %>
