@@ -1,6 +1,8 @@
+
 const express = require('express');
 const app = express();
 const connectDB = require("./config/db");
+const userRoutes = require("./routes/users");
 require('dotenv').config();
  
 const PORT = process.env.PORT || 3000;
@@ -25,6 +27,7 @@ app.use("/", require("./routes/auth"));
 app.get('/', (req, res) => {
     res.redirect('/register');
 });
+app.use("/", userRoutes);   // Mount user routes at root
 
 
 app.listen(PORT, ()=>{console.log(`Server is running at http://localhost:${PORT}`)});
