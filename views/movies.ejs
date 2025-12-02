@@ -1,0 +1,15 @@
+<h2>All Movies</h2>
+
+<a href="/movies/add" class="btn btn-primary">Add New Movie</a>
+
+<ul class="movie-list">
+    <% movies.forEach(movie => { %>
+        <li class="movie-card">
+            <h3><%= movie.title %> (<%= movie.year %>)</h3>
+            <p>Rating: <%= movie.rating %>/10</p>
+
+            <a href="/movies/<%= movie._id %>" class="btn btn-details">Details</a>
+            <a href="/movies/edit/<%= movie._id %>" class="btn btn-edit">Edit</a>
+        </li>
+    <% }) %>
+</ul>
