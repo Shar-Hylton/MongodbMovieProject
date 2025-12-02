@@ -1,9 +1,19 @@
+/**
+ * Movies Routes
+ * Includes: listing, adding, viewing, editing, deleting movies
+ * Validation is handled using custom middleware
+ * Adhyan Chandhoke & Shar-Hylton
+ */
+
 const express = require("express");
 const router = express.Router();
 const Movie = require("../models/Movie");
-const auth = require("../middleware/auth");
-const owner = require("../middleware/owner");
-const { body, validationResult } = require("express-validator");
+
+const auth = require("../middleware/auth");       // Restricts access to logged-in users
+const owner = require("../middleware/owner");     // Restricts access to movie creator
+
+// Import our new reusable validation middleware
+const { movieValidationRules, validate } = require("../middleware/validation");
 
 // LIST MOVIES
 router.get("/", async (req, res) => {
@@ -17,19 +27,16 @@ router.get("/add", auth, (req, res) => {
 });
 
 // ADD MOVIE POST
-router.post("/add",
+router.post(
+    "/add",
     auth,
-    [
-        body("name").notEmpty().withMessage("Movie name required"),
-        body("year").isNumeric().withMessage("Year must be a number"),
-        body("rating").isNumeric().withMessage("Rating must be a number")
-    ],
+    movieValidationRules,   // Apply validation rules
+    validate,               // Collect validation errors
     async (req, res) => {
 
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
+        if (req.validationErrors) {
             return res.render("movies/add", {
-                errors: errors.array(),
+                errors: req.validationErrors,
                 old: req.body
             });
         }
@@ -43,7 +50,7 @@ router.post("/add",
     }
 );
 
-// MOVIE DETAILS
+// MOVIE DETAILS PAGE
 router.get("/:id", async (req, res) => {
     const movie = await Movie.findById(req.params.id);
     res.render("movies/details", { movie });
@@ -56,11 +63,25 @@ router.get("/edit/:id", auth, owner, async (req, res) => {
 });
 
 // EDIT MOVIE POST
-router.post("/edit/:id",
+router.post(
+    "/edit/:id",
     auth,
     owner,
+    movieValidationRules,  // Reuse same validation rules
+    validate,              // Handle errors
     async (req, res) => {
+
+        if (req.validationErrors) {
+            const movie = await Movie.findById(req.params.id);
+
+            return res.render("movies/edit", {
+                movie,
+                errors: req.validationErrors
+            });
+        }
+
         await Movie.findByIdAndUpdate(req.params.id, req.body);
+
         res.redirect("/movies/" + req.params.id);
     }
 );
