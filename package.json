@@ -1,8 +1,5 @@
-{
-<<<<<<< HEAD
-  "dependencies": {
-    "ejs": "^3.1.10"
-=======
+
+ {
   "name": "movies-project",
   "version": "1.0.0",
   "description": "",
@@ -31,6 +28,5 @@
     "express-validator": "^7.3.1",
     "mongoose": "^9.0.0",
     "nodemon": "^3.1.11"
->>>>>>> 91b0bacb677b6f3acd15ca3b90d8fd9538214365
   }
 }
