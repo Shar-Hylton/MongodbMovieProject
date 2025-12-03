@@ -7,7 +7,7 @@ const movieSchema = new mongoose.Schema({
     genres: [String],
     rating: Number,
     owner: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-    extraField: String   // your allowed extra field
+    extraField: String   
 });
 
 module.exports = mongoose.model("Movie", movieSchema);
