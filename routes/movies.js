@@ -21,7 +21,11 @@ router.get("/", async (req, res) => {
 });
 
 router.get("/add", auth, (req, res) => {
-    res.render("movies/add", { errors: [], old: {} });
+    res.render("movies/add", { 
+        errors: [], 
+        old: {},
+        user: req.user || req.session.user 
+    });
 });
 
 router.post("/add",
@@ -123,7 +127,7 @@ router.post(
 
         res.redirect("/movies/" + req.params.id);
     }
-);
+));
 
 router.get("/delete/:id", auth, owner, async (req, res) => {
     await Movie.findByIdAndDelete(req.params.id);
