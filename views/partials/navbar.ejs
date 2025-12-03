@@ -1,14 +1,47 @@
 <nav class="navbar">
-    <ul>
-        <li><a href="/">Home</a></li>
-        <li><a href="/movies">Movies</a></li>
-        <li><a href="/movies/add">Add Movie</a></li>
-
-        <% if (user) { %>
-            <li><a href="/logout">Logout</a></li>
-        <% } else { %>
-            <li><a href="/login">Login</a></li>
-            <li><a href="/register">Register</a></li>
-        <% } %>
-    </ul>
+    <div class="container navbar__container">
+        <a href="/" class="navbar__logo">MovieProject</a>
+        
+        <ul class="navbar__menu">
+            <li>
+                <a href="/" class="navbar__link <%= currentPath === '/' ? 'navbar__link--active' : '' %>">
+                    <i class="fas fa-home"></i> Home
+                </a>
+            </li>
+            <li>
+                <a href="/movies" class="navbar__link <%= currentPath === '/movies' ? 'navbar__link--active' : '' %>">
+                    <i class="fas fa-film"></i> Movies
+                </a>
+            </li>
+            <li>
+                <a href="/movies/add" class="navbar__link <%= currentPath === '/movies/add' ? 'navbar__link--active' : '' %>">
+                    <i class="fas fa-plus-circle"></i> Add Movie
+                </a>
+            </li>
+            
+            <% if (user) { %>
+                <li class="navbar__user">
+                    <span class="navbar__user-name">
+                        <i class="fas fa-user-circle"></i> <%= user.username %>
+                    </span>
+                </li>
+                <li>
+                    <a href="/logout" class="navbar__link">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </a>
+                </li>
+            <% } else { %>
+                <li>
+                    <a href="/login" class="navbar__link <%= currentPath === '/login' ? 'navbar__link--active' : '' %>">
+                        <i class="fas fa-sign-in-alt"></i> Login
+                    </a>
+                </li>
+                <li>
+                    <a href="/register" class="navbar__link <%= currentPath === '/register' ? 'navbar__link--active' : '' %>">
+                        <i class="fas fa-user-plus"></i> Register
+                    </a>
+                </li>
+            <% } %>
+        </ul>
+    </div>
 </nav>
