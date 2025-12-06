@@ -1,0 +1,23 @@
+<% include('./partials/header') %>
+
+<form action="/login" method="POST" class="loginform">
+
+    <fieldset>
+        <label for="fname">firstname</label>
+        <input type="text" id ="fname" name ="fname" placeholder="first-name">
+        <label for="lname">lastname</label>
+        <input type="text" id ="lname" name ="lname" placeholder="last-name">
+        <label for="email">email</label>
+        <input type="text" id="email" name="email" placeholder="example@gmail.com">
+        <label for="password">password</label>
+        <input type="password" id ="password" name ="password" placeholder="password">
+        <label for="confirm-password">confirm-password</label>
+        <input type="password" id ="confirm-password" name ="confirm-password" placeholder="confirm-password">
+    </fieldset>
+    <button type="submit" class="submit-btn">Login</button>
+</form>
+
+
+
+
+<%- include('./partials/footer') %>
