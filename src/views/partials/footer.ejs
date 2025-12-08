@@ -1,6 +1,25 @@
+  </main>
+
+  <footer class="bg-white dark:bg-gray-800 shadow-inner mt-8">
+    <div class="max-w-6xl mx-auto py-4 px-4 text-center text-gray-700 dark:text-gray-100">
+      &copy; <%= new Date().getFullYear() %> MoviesApp. All rights reserved.
+    </div>
+  </footer>
+
+  <!-- Dark mode toggle script -->
+<script>
+  const toggleBtn = document.getElementById('dark-toggle');
+  const htmlEl = document.documentElement;
+
+  toggleBtn.addEventListener('click', () => {
+    htmlEl.classList.toggle('dark');
+    localStorage.setItem('dark', htmlEl.classList.contains('dark'));
+  });
+
+  if(localStorage.getItem('dark') === 'true') htmlEl.classList.add('dark');
+</script>
+
+
 
 </body>
-    <footer>
-        <p>MovieCinema &copy;, All Rights Reserved</p> 
-    </footer>
 </html>

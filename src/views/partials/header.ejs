@@ -1,21 +1,86 @@
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title><%=title%></title>
-    </head>
-    <body>
-        <header>
-            <nav class="navigation">
-                <ul class="navlinks">
-                    <li>Home</li>
-                    <li>Register</li>
-                    <li>Login</li>
-                    <li>Movies</li>
-                </ul>
-            </nav>
-        </header>
-        
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %> | Movies App</title>
 
-    
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#3b82f6',
+            secondary: '#6366f1',
+          },
+        }
+      }
+    }
+  </script>
+
+  <!-- Font Awesome -->
+ <script src="https://kit.fontawesome.com/4eed10a0c3.js" crossorigin="anonymous"></script>
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen flex flex-col">
+
+  <!-- Navbar -->
+  <nav class="bg-white dark:bg-gray-800 shadow-md">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="flex justify-between items-center py-3">
+
+        <!-- Logo -->
+        <a href="/movies" class="flex items-center text-gray-700 dark:text-gray-100 font-bold text-lg hover:text-primary transition">
+          <i class="fa-solid fa-film mr-2"></i>MoviesApp
+        </a>
+
+        <!-- Links -->
+        <div class="flex items-center space-x-4">
+          <a href="/movies" class="hover:underline hover:text-primary transition">Home</a>
+          <% if (session?.user) { %>
+            <a href="/movies/add" class="hover:underline hover:text-primary transition">Add Movie</a>
+          <% } %>
+        </div>
+
+        <!-- User / Auth / Dark Mode -->
+        <div class="flex items-center space-x-3">
+          <!-- Dark Mode Toggle -->
+          <button id="dark-toggle" class="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700 transition" title="Toggle Dark Mode">
+            <i class="fa-solid fa-circle-half-stroke text-gray-700 dark:text-gray-100"></i>
+          </button>
+
+          <% if (session?.user) { %>
+            <span class="px-3 py-1 font-semibold text-gray-700 dark:text-gray-100 hover:underline cursor-pointer transition">Hi, <%= session.user.username %></span>
+            <a href="/auth/logout" class="px-3 py-1 rounded bg-red-500 text-white hover:bg-red-600 transition">
+              <i class="fa-solid fa-right-from-bracket mr-1"></i>Logout
+            </a>
+          <% } else { %>
+            <a href="/auth/login" class="px-3 py-1 rounded bg-blue-500 text-white hover:bg-blue-600 transition">Login</a>
+            <a href="/auth/register" class="px-3 py-1 rounded bg-green-500 text-white hover:bg-green-600 transition">Register</a>
+          <% } %>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Flash messages -->
+  <div class="max-w-6xl mx-auto mt-4 px-4">
+    <% if (session?.success) { %>
+      <div class="alert-success mb-4 px-4 py-2 bg-green-100 text-green-800 rounded shadow">
+        <i class="fa-solid fa-circle-check mr-2"></i> <%= session.success %>
+      </div>
+      <% session.success = null %>
+    <% } %>
+    <% if (session?.error) { %>
+      <div class="alert-error mb-4 px-4 py-2 bg-red-100 text-red-800 rounded shadow">
+        <i class="fa-solid fa-triangle-exclamation mr-2"></i> <%= session.error %>
+      </div>
+      <% session.error = null %>
+    <% } %>
+  </div>
+
+  <main class="flex-1 max-w-6xl mx-auto px-4 py-6">

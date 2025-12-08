@@ -1,0 +1,132 @@
+<%- include('../partials/header') %>
+
+<div class="max-w-2xl mx-auto mt-10 p-6 bg-white dark:bg-gray-800 shadow-lg rounded-xl transition-all duration-500 hover:shadow-2xl">
+  <h2 class="text-3xl font-bold mb-8 text-center text-gray-900 dark:text-gray-100">Add New Movie</h2>
+
+  <% if (errors && errors.length) { %>
+    <div class="alert-error mb-6 p-4 rounded bg-red-100 dark:bg-red-800 text-red-700 dark:text-red-200">
+      <ul class="list-disc pl-5">
+        <% errors.forEach(err => { %>
+          <li><i class="fa-solid fa-triangle-exclamation mr-1"></i><%= err.msg %></li>
+        <% }) %>
+      </ul>
+    </div>
+  <% } %>
+
+  <form action="/movies/add" method="POST" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+    <!-- Movie Name -->
+    <div class="col-span-1 md:col-span-1">
+      <label for="name" class="block mb-2 font-semibold text-gray-700 dark:text-gray-200">Movie Name</label>
+      <input
+        type="text"
+        id="name"
+        name="name"
+        value="<%= old?.name || '' %>"
+        placeholder="Movie Title"
+        class="shadow border rounded w-full py-2 px-3 text-gray-700 dark:text-gray-100 dark:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300"
+        required
+      >
+    </div>
+
+    <!-- Year -->
+    <div>
+      <label for="year" class="block mb-2 font-semibold text-gray-700 dark:text-gray-200">Year</label>
+      <input
+        type="number"
+        id="year"
+        name="year"
+        value="<%= old?.year || '' %>"
+        placeholder="1990"
+        min="1900"
+        max="<%= new Date().getFullYear() %>"
+        class="shadow border rounded w-full py-2 px-3 text-gray-700 dark:text-gray-100 dark:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300"
+      >
+    </div>
+
+    <!-- Rating -->
+<div>
+  <label for="rating" class="block mb-2 font-semibold text-gray-700 dark:text-gray-200">Rating</label>
+  <input
+    type="number"
+    id="rating"
+    name="rating"
+    value="<%= old?.rating || '' %>"
+    placeholder="0-5"
+    min="0"
+    max="5"
+    step="0.1"
+    class="shadow border rounded w-full py-2 px-3 text-gray-700 dark:text-gray-100 dark:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300"
+  >
+</div>
+
+    <!-- Poster URL -->
+    <div>
+      <label for="posterUrl" class="block mb-2 font-semibold text-gray-700 dark:text-gray-200">Poster URL</label>
+      <input
+        type="url"
+        id="posterUrl"
+        name="posterUrl"
+        value="<%= old?.posterUrl || '' %>"
+        placeholder="https://example.com/poster.jpg"
+        class="shadow border rounded w-full py-2 px-3 text-gray-700 dark:text-gray-100 dark:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300"
+      >
+    </div>
+
+    <!-- Description (full width) -->
+    <div class="col-span-1 md:col-span-2">
+      <label for="description" class="block mb-2 font-semibold text-gray-700 dark:text-gray-200">Description</label>
+      <textarea
+        id="description"
+        name="description"
+        placeholder="Movie description"
+        rows="4"
+        class="shadow border rounded w-full py-2 px-3 text-gray-700 dark:text-gray-100 dark:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300"
+        required
+      ><%= old?.description || '' %></textarea>
+    </div>
+
+    <!-- Genres -->
+    <div class="col-span-1 md:col-span-2">
+      <label class="block mb-2 font-semibold text-gray-700 dark:text-gray-200">Genres</label>
+      <div class="grid grid-cols-2 gap-2">
+        <% const allGenres = ['Action', 'Comedy', 'Drama', 'Horror', 'Romance', 'Sci-Fi', 'Thriller', 'Adventure', 'Fantasy', 'Mystery']; %>
+        <% const selectedGenres = Array.isArray(old?.genres) ? old.genres : (old?.genres ? [old.genres] : []); %>
+        <% allGenres.forEach(genre => { %>
+          <div class="flex items-center space-x-2">
+            <input
+              type="checkbox"
+              name="genres"
+              value="<%= genre %>"
+              <%= selectedGenres.includes(genre) ? 'checked' : '' %>
+              class="form-checkbox h-4 w-4 text-blue-600"
+            >
+            <span class="text-sm text-gray-700 dark:text-gray-200"><%= genre %></span>
+          </div>
+        <% }) %>
+      </div>
+    </div>
+
+    <!-- Submit button (full width) -->
+    <div class="col-span-1 md:col-span-2">
+      <button type="submit" class="btn-primary w-full font-bold py-2 rounded shadow-md hover:shadow-xl hover:scale-105 transform transition-all duration-300 ease-in-out text-white bg-blue-600 hover:bg-blue-700">
+        <i class="fa-solid fa-plus mr-2"></i> Add Movie
+      </button>
+    </div>
+
+  </form>
+
+  <p class="text-center mt-6 text-gray-600 dark:text-gray-300">
+    <a href="/movies" class="text-blue-600 dark:text-blue-400 hover:underline hover:text-blue-800 transition duration-300 font-semibold">
+      <i class="fa-solid fa-arrow-left mr-1"></i>Back to Movies List
+    </a>
+  </p>
+</div>
+
+<!-- no JS needed for genre pills anymore -->
+
+<%- include('../partials/footer') %>
+
+
+<!-- https://image.tmdb.org/t/p/original/9mHddTgEFfAaW3KU3nK6oas7jPH.jpg
+"Suits" is an American legal drama that follows the story of a college dropout with a photographic memory who becomes a lawyer despite never attending law school, working alongside a top attorney in a prestigious New York City law firm. -->

@@ -28,7 +28,13 @@ const movieSchema = mongoose.Schema({
 
     rating: {
         type: Number,
-        min: 5
+        min: 0,
+        max: 5
+    },
+
+    posterUrl: {
+        type: String,
+        trim: true
     },
 
     owner: { 
@@ -37,5 +43,5 @@ const movieSchema = mongoose.Schema({
     }
 }, {timestamps: true})
 
-let Movie = module.exports = mongoose.model("Movie", movieSchema);
+module.exports = mongoose.model("Movie", movieSchema);
 
